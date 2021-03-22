@@ -1,28 +1,30 @@
 
 import path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 export default {
   mode: 'development',
-  entry: ["@babel/polyfill", "./public/src/main.js"],
+  entry: "./public/src/main.js",
   watch: true,
+  target: "es5",
   output: {
-    path: path.resolve(process.cwd(), "public"),
+    path: path.resolve(__dirname, "public"),
     filename: 'main_bundle.js'
   },
   module: {
     rules: [{
-      test: /\.js$/,
+      test: /\.(js)$/,
       include: [
-        path.resolve(process.cwd(), "public"),
+        path.resolve(__dirname, "public/src"),
       ],
       exclude: /node_modules/,
-      use: {
-        loader: 'babel-loader?presets[]=es2015',
-        options: {
-          presets: ['@babel/preset-env'],
-          plugins: ['@babel/plugin-proposal-class-properties']
-        }
-      }
+      use: ['babel-loader']
     },],
+  },
+  resolve: {
+    extensions: ['*', '.js']
   },
   devtool: 'source-map',
 }
