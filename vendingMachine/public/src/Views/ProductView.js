@@ -15,11 +15,13 @@ class ProductView {
   }
 
   initEvent() {
-    _.on(this.$wrapper, 'click', ({ target }) => {
-      if (!target.classList.contains(this.nameListClassName)) return;
-      this.productModel.sold(target.innerText);
-      this.render();
-    })
+    _.on(this.$wrapper, 'click', this.clickProductHandler.bind(this));
+  }
+
+  clickProductHandler({ target }) {
+    if (!target.classList.contains(this.nameListClassName)) return;
+    this.productModel.sold(target.innerText);
+    this.render();
   }
 
   itemDisableChanger() {
