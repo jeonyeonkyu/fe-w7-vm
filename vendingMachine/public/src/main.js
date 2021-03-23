@@ -1,3 +1,5 @@
+import _ from './utils/elementUtil.js';
+
 import ProductModel from './Models/ProductModel.js';
 import ProcessModel from './Models/ProcessModel.js';
 import WalletModel from './Models/WalletModel.js';
@@ -6,29 +8,18 @@ import ProductView from './Views/ProductView.js';
 import ProcessView from './Views/ProcessView.js';
 import WalletView from './Views/WalletView.js';
 
-
-
-// walletModel.init()
-// walletModel.getMoneyObject(); //이렇게하면 {10 : 0, 50: 0} 요런식으로나오게 하기
-
+const productModel = new ProductModel();
 
 const productView = new ProductView();
 
 const processView = new ProcessView();
 
 const walletModel = new WalletModel(23550);
-const walletView = new WalletView({ walletModel });
-
-
-
-const wallet = document.querySelector(".wallet");
-wallet.addEventListener("click", (e) => {
-  const currency = e.target;
-  if (currency.innerText[currency.innerText.length - 1] === "원") {
-    let currencyCount = Number(e.target.nextElementSibling.innerText);
-    if (currencyCount > 0) {
-      currencyCount--;
-      e.target.nextElementSibling.innerText = currencyCount;
-    }
-  }
-})
+const walletEl = {
+  $walletMoney: _.$('.wallet__money'),
+  priceClassName: 'wallet__money__price',
+  $priceList: _.$All(`.wallet__money__price`),
+  $countList: _.$All('.wallet__money__count'),
+  $totalMoney: _.$('.wallet__total_money')
+}
+const walletView = new WalletView({ walletModel }, walletEl);
