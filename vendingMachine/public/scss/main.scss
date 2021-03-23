@@ -11,6 +11,10 @@
   &__twenty {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+
+    &__name {
+      outline: 3px solid red;
+    }
     > li {
       margin: 10px;
       align-self: center;
@@ -94,4 +98,8 @@
 
 .disable {
   color: rgb(200, 200, 200);
+}
+
+.selectable {
+  outline: 3px solid red;
 }
