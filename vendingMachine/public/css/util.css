@@ -1,4 +1,4 @@
-* {
+li {
   list-style: none;
 }
 
@@ -9,81 +9,6 @@ ul {
 
 body {
   margin: 0;
-}
-
-.product20 {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-}
-.product20 li {
-  margin: 10px;
-  align-self: center;
-  text-align: center;
-}
-.product20 li div {
-  height: 50px;
-  display: flex;
-  place-items: center;
-  justify-content: center;
-  border: 1px gray solid;
-}
-
-.wrapper {
-  display: flex;
-}
-.wrapper section {
-  border: 1px solid gray;
-}
-
-.process {
-  width: 25rem;
-}
-.process div {
-  border: 1px gray solid;
-  margin: 30px 10px;
-}
-.process__print_price {
-  height: 45px;
-  border: 1px solid gray;
-  justify-content: center;
-  display: flex;
-  align-items: center;
-}
-.process__exchange {
-  height: 45px;
-  border: 1px solid gray;
-  justify-content: center;
-  display: flex;
-  align-items: center;
-}
-.process__print_log {
-  height: 180px;
-}
-
-.wallet {
-  width: 15rem;
-}
-.wallet div {
-  border: 1px gray solid;
-}
-.wallet .total_money {
-  display: flex;
-  place-content: center;
-  align-items: center;
-  height: 30px;
-  margin: 10px 10px;
-}
-
-.money li {
-  display: flex;
-}
-.money li div {
-  display: flex;
-  width: 50%;
-  height: 35px;
-  margin: 5%;
-  align-items: center;
-  justify-content: center;
 }
 
 /*# sourceMappingURL=util.css.map */
