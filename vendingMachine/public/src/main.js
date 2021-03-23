@@ -7,17 +7,17 @@ import ProcessView from './Views/ProcessView.js';
 import WalletView from './Views/WalletView.js';
 
 
-const walletModel = new WalletModel(23550);
 
-walletModel.init()
-walletModel.getMoneyObject(); //이렇게하면 {10 : 0, 50: 0} 요런식으로나오게 하기
+// walletModel.init()
+// walletModel.getMoneyObject(); //이렇게하면 {10 : 0, 50: 0} 요런식으로나오게 하기
 
 
 const productView = new ProductView();
 
 const processView = new ProcessView();
 
-const walletView = new WalletView();
+const walletModel = new WalletModel(23550);
+const walletView = new WalletView({ walletModel });
 
 
 
