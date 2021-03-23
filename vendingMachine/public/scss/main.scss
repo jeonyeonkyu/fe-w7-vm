@@ -1,0 +1,80 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 220px 0;
+  > section {
+    border: 1px solid gray;
+  }
+}
+
+.product {
+  &__twenty {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    > li {
+      margin: 10px;
+      align-self: center;
+      text-align: center;
+      > div {
+        height: 50px;
+        display: flex;
+        place-items: center;
+        justify-content: center;
+        border: 1px gray solid;
+      }
+    }
+  }
+}
+
+.process {
+  width: 25rem;
+  div {
+    border: 1px gray solid;
+    margin: 30px 10px;
+  }
+  &__print_price {
+    height: 45px;
+    border: 1px solid gray;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+  }
+  &__exchange {
+    height: 45px;
+    border: 1px solid gray;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+  }
+  &__print_log {
+    height: 180px;
+  }
+}
+
+.wallet {
+  width: 15rem;
+  div {
+    border: 1px gray solid;
+  }
+  &__money {
+    > li {
+      display: flex;
+      > div {
+        display: flex;
+        width: 50%;
+        height: 40px;
+        margin: 5%;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+      }
+    }
+  }
+  &__total_money {
+    display: flex;
+    place-content: center;
+    align-items: center;
+    height: 30px;
+    margin: 10px 10px;
+  }
+}
