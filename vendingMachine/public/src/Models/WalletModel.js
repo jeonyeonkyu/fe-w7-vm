@@ -9,6 +9,7 @@ class WalletModel {
     KRW10000: 0
   };
   constructor(money) {
+    this.money = money;
     this.init(money);
   }
 
@@ -32,13 +33,16 @@ class WalletModel {
 
   useMoney(moneyKind) {
     this.moneyObject[`KRW${moneyKind}`]--;
+    this.money -= moneyKind;
   }
 
   getMoneyObject() {
-    return [...this.moneyObject];
+    return { ...this.moneyObject };
+  }
+
+  getMoney() {
+    return this.money;
   }
 }
-
-const walletModel = new WalletModel(23550);
 
 export default WalletModel;
