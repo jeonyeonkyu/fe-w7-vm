@@ -10,7 +10,7 @@ export default {
   watch: true,
   target: "es5",
   output: {
-    path: path.resolve(__dirname, "public"),
+    path: path.resolve(__dirname, "dist"),
     filename: 'main_bundle.js'
   },
   module: {

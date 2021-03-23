@@ -4,9 +4,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "watch:scss": "sass --watch public/scss:public/css",
+    "watch:scss": "sass --watch public/scss:dist/css",
     "watch:webpack": "npx webpack",
-    "predeploy-scss": "sass public/scss:public/css",
+    "predeploy-scss": "sass public/scss:dist/css",
     "server:start": "nodemon ./bin/www",
     "start": "node tools/start"
   },
