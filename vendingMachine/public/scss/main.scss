@@ -11,7 +11,6 @@
   &__twenty {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-
     &__name {
       outline: 3px solid red;
     }
@@ -57,6 +56,7 @@
 
 .wallet {
   width: 15rem;
+  margin-left: 15px;
   div {
     border: 1px gray solid;
   }
