@@ -69,6 +69,13 @@
         border-radius: 10px;
       }
     }
+    &__price {
+      ::after {
+        content: "원";
+      }
+    }
+    &__count {
+    }
   }
   &__total_money {
     display: flex;
