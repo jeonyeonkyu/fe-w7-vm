@@ -1,12 +1,18 @@
 import _ from './utils/elementUtil.js';
 import products from "./data/products.js";
-import ProductModel from './Models/ProductModel.js';
-import ProcessModel from './Models/ProcessModel.js';
-import WalletModel from './Models/WalletModel.js';
 
+import ProductModel from './Models/ProductModel.js';
 import ProductView from './Views/ProductView.js';
-import ProcessView from './Views/ProcessView.js';
+
+import ProcessModel from './Models/ProcessModel.js';
+import InputAmountView from './Views/InputAmountView.js';
+import PrintView from './Views/PrintView.js';
+import RepaymentView from './Views/RepaymentView.js';
+
+import WalletModel from './Models/WalletModel.js';
 import WalletView from './Views/WalletView.js';
+
+
 
 
 const productModel = new ProductModel({ products });
@@ -19,7 +25,7 @@ const productEl = {
 const productView = new ProductView({ productModel }, productEl);
 
 const processModel = new ProcessModel();
-const processView = new ProcessView();
+
 
 const walletModel = new WalletModel(23550);
 const walletEl = {
