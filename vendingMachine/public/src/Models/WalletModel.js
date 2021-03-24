@@ -1,13 +1,14 @@
 class WalletModel {
-  moneyObject = {
-    KRW10: 0,
-    KRW50: 0,
-    KRW100: 0,
-    KRW500: 0,
-    KRW1000: 0,
-    KRW5000: 0,
-    KRW10000: 0
-  };
+  moneyObject = new Map([
+    [10000, 0],
+    [5000, 0],
+    [1000, 0],
+    [500, 0],
+    [100, 0],
+    [50, 0],
+    [10, 0],
+  ]);
+
   constructor(money) {
     this.money = money;
     this.init(money);
@@ -16,28 +17,25 @@ class WalletModel {
   init(money) {
     this.makeObject(money);
   }
-
+  
   makeObject(money) {
     let currentMoney = money;
-    let twoOrFiveFlag = true;
-    let moneyKind = 10000;
-    while (currentMoney) {
+    for (let moneyKind of this.moneyObject.keys()) {
       if (currentMoney < 10) return;
       const count = Math.floor(currentMoney / moneyKind);
-      this.moneyObject[`KRW${moneyKind}`] = count;
+      this.moneyObject.set(moneyKind, count);
       currentMoney -= count * moneyKind;
-      moneyKind = twoOrFiveFlag ? moneyKind / 2 : moneyKind / 5;
-      twoOrFiveFlag = !twoOrFiveFlag;
     }
   }
-
+  
   useMoney(moneyKind) {
-    this.moneyObject[`KRW${moneyKind}`]--;
+    let count = this.moneyObject.get(moneyKind);
+    this.moneyObject.set(moneyKind, --count);
     this.money -= moneyKind;
   }
 
   getMoneyObject() {
-    return { ...this.moneyObject };
+    return Array.from(this.moneyObject.entries()); // moneyObject가 Map이라 가정
   }
 
   getMoney() {
