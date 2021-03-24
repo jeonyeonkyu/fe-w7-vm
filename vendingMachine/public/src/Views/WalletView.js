@@ -2,8 +2,9 @@ import _ from "../utils/elementUtil.js";
 import zip from "../utils/serviceUtil.js";
 
 class WalletView {
-  constructor({ walletModel }, { $walletMoney, priceClassName, $priceList, $countList, $totalMoney }) {
+  constructor({ walletModel, ProcessModel }, { $walletMoney, priceClassName, $priceList, $countList, $totalMoney }) {
     this.walletModel = walletModel;
+    this.ProcessModel = ProcessModel;
     this.$walletMoney = $walletMoney;
     this.priceClassName = priceClassName;
     this.$priceList = $priceList;
@@ -19,6 +20,13 @@ class WalletView {
 
   initEvent() {
     _.on(this.$walletMoney, 'click', this.clickPriceHandler.bind(this));
+    _.on(this.$walletMoney, 'click', () => {
+
+      //    ProcessModel의 데이터를 수정하고
+      // this.ProcessModel.notify(getProcessObject());
+      //   
+    });
+    //돈을 클릭했을때 this.ProcessModel.notify() 
   }
 
   clickPriceHandler({ target }) {
@@ -40,10 +48,10 @@ class WalletView {
   }
 
   renderCount() {
-    
+
     const moneyObj = this.walletModel.getMoneyObject().map(el => el[1]);
     const pairs = zip(this.$countList, moneyObj.reverse());
-    
+
     pairs.forEach(([$count, count]) => $count.innerText = count);
   }
 
@@ -56,6 +64,8 @@ class WalletView {
     this.renderCount();
     this.renderTotalMoney();
   }
+
+
 }
 
 export default WalletView;
