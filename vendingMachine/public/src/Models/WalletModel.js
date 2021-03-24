@@ -12,12 +12,14 @@ class WalletModel {
   constructor(money) {
     this.money = money;
     this.init(money);
+    this.observers = [];
   }
 
+  
   init(money) {
     this.makeObject(money);
   }
-  
+
   makeObject(money) {
     let currentMoney = money;
     for (let moneyKind of this.moneyObject.keys()) {
@@ -27,7 +29,7 @@ class WalletModel {
       currentMoney -= count * moneyKind;
     }
   }
-  
+
   useMoney(moneyKind) {
     let count = this.moneyObject.get(moneyKind);
     this.moneyObject.set(moneyKind, --count);
@@ -41,6 +43,19 @@ class WalletModel {
   getMoney() {
     return this.money;
   }
+
+  registerObserver(target) {
+    this.observers.push(target);
+  }
+
+  unregisterObserver(target) {
+    this.observers = this.observers.filter(observer => observer !== target); 
+  }
+
+  notifyObservers(content) {
+    this.observers.forEach((observer) => observer.notify(content));
+  } 
+
 }
 
 export default WalletModel;
