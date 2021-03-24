@@ -1,4 +1,5 @@
 import _ from "../utils/elementUtil.js";
+import zip from "../utils/serviceUtil.js";
 
 class WalletView {
   constructor({ walletModel }, { $walletMoney, priceClassName, $priceList, $countList, $totalMoney }) {
@@ -23,26 +24,27 @@ class WalletView {
   clickPriceHandler({ target }) {
     if (!target.classList.contains(this.priceClassName)) return;
     if (target.classList.contains('disable')) return;
-    this.walletModel.useMoney(target.innerText);
+    this.walletModel.useMoney(Number(target.innerText));
     this.render();
   }
 
   moneyDisableChanger() {
-    const moneyObject = this.walletModel.getMoneyObject();
-    let i = 0;
-    for (let price in moneyObject) {
-      const priceNode = this.$priceList[i++];
-      moneyObject[price] === 0 ?
-        priceNode.classList.add('disable') : priceNode.classList.remove('disable');
-    }
+    const moneyObj = this.walletModel.getMoneyObject().map(el => el[1]);
+    const pairs = zip(this.$priceList, moneyObj.reverse());
+    pairs
+      .filter(([_, count]) => count <= 0)
+      .forEach(([$price, _]) => $price.classList.add('disable'));
+    pairs
+      .filter(([_, count]) => count > 0)
+      .forEach(([$price, _]) => $price.classList.remove('disable'));
   }
 
   renderCount() {
-    const moneyObject = this.walletModel.getMoneyObject();
-    let i = 0;
-    for (let price in moneyObject) {
-      this.$countList[i++].innerText = moneyObject[price];
-    }
+    
+    const moneyObj = this.walletModel.getMoneyObject().map(el => el[1]);
+    const pairs = zip(this.$countList, moneyObj.reverse());
+    
+    pairs.forEach(([$count, count]) => $count.innerText = count);
   }
 
   renderTotalMoney() {

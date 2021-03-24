@@ -1,4 +1,5 @@
 import _ from "../utils/elementUtil.js";
+import zip from "../utils/serviceUtil.js";
 
 class ProductView {
   constructor({ productModel }, { $wrapper, nameListClassName, $nameList, $priceList }) {
@@ -25,12 +26,13 @@ class ProductView {
   }
 
   itemDisableChanger() {
-    const productArray = this.productModel.getProduct();
-    for (let i = 0; i < this.$nameList.length; i++) {
-      const $name = this.$nameList[i];
-      productArray[i].count === 0 ?
-        $name.classList.add('disable') : $name.classList.remove('disable');
-    }
+    const pairs = zip(this.$nameList, this.productModel.getProduct());
+    pairs
+      .filter(([_, p]) => p.count <= 0)
+      .forEach(([$name]) => $name.classList.add('disable'));
+    pairs
+      .filter(([_, p]) => p.count > 0)
+      .forEach(([$name]) => $name.classList.remove('disable'));
   }
 
   render() {
