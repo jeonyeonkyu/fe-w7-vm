@@ -2,9 +2,9 @@ import _ from "../utils/elementUtil.js";
 import zip from "../utils/serviceUtil.js";
 
 class WalletView {
-  constructor({ walletModel, ProcessModel }, { $walletMoney, priceClassName, $priceList, $countList, $totalMoney }) {
+  constructor({ walletModel, processModel }, { $walletMoney, priceClassName, $priceList, $countList, $totalMoney }) {
     this.walletModel = walletModel;
-    this.ProcessModel = ProcessModel;
+    this.processModel = processModel;
     this.$walletMoney = $walletMoney;
     this.priceClassName = priceClassName;
     this.$priceList = $priceList;
@@ -20,19 +20,17 @@ class WalletView {
 
   initEvent() {
     _.on(this.$walletMoney, 'click', this.clickPriceHandler.bind(this));
-    _.on(this.$walletMoney, 'click', () => {
-
-      //    ProcessModel의 데이터를 수정하고
-      // this.ProcessModel.notify(getProcessObject());
-      //   
-    });
-    //돈을 클릭했을때 this.ProcessModel.notify() 
   }
 
   clickPriceHandler({ target }) {
     if (!target.classList.contains(this.priceClassName)) return;
     if (target.classList.contains('disable')) return;
-    this.walletModel.useMoney(Number(target.innerText));
+    const processObj = this.processModel.getProcessObject();
+
+    const moneyKind = Number(target.innerText);
+    processObj.money += moneyKind;
+    this.processModel.notify(processObj);
+    this.walletModel.useMoney(moneyKind);
     this.render();
   }
 

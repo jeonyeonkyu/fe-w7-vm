@@ -10,7 +10,7 @@ class InputAmountView {
   }
 
   render({ money }) {
-
+    this.$processPrice.innerText = money;
   }
 
 

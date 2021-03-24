@@ -36,6 +36,9 @@
     margin: 30px 10px;
   }
   &__print_price {
+    &::after {
+      content:"원";
+    }
     height: 45px;
     border: 1px solid gray;
     justify-content: center;

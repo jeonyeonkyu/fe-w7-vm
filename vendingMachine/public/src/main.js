@@ -34,11 +34,11 @@ const walletEl = {
 }
 
 const productModel = new ProductModel({ products });
-const productView = new ProductView({ productModel, ProcessModel }, productEl);
+const productView = new ProductView({ productModel, processModel }, productEl);
 
 const inputAmountView = new InputAmountView({ processModel }, processEl);
 const repaymentView = new RepaymentView({ processModel }, processEl);
 const printView = new PrintView({ processModel }, processEl);
 
 const walletModel = new WalletModel(23550);
-const walletView = new WalletView({ walletModel, ProcessModel }, walletEl);
+const walletView = new WalletView({ walletModel, processModel }, walletEl);

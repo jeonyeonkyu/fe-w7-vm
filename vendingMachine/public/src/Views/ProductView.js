@@ -2,8 +2,9 @@ import _ from "../utils/elementUtil.js";
 import zip from "../utils/serviceUtil.js";
 
 class ProductView {
-  constructor({ productModel }, { $wrapper, nameListClassName, $nameList, $priceList }) {
+  constructor({ productModel, processModel }, { $wrapper, nameListClassName, $nameList, $priceList }) {
     this.productModel = productModel;
+    this.processModel = processModel;
     this.$wrapper = $wrapper;
     this.nameListClassName = nameListClassName;
     this.$nameList = $nameList;
