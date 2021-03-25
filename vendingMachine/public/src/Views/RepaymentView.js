@@ -17,15 +17,15 @@ class RepaymentView {
   }
 
   exchangeClickHandler() {
-    const processObj = this.processModel.getProcessObject();
     const inputMoney = this.processModel.getMoney();
     this.processModel.exchangeMoney();
-    this.processModel.notify(processObj);
+    this.processModel.updateLog('반환', inputMoney);
+    this.processModel.notify(this.processModel.getProcessObject());
     this.walletModel.addMoney(inputMoney);
     const wallet = this.walletModel.getWallet();
     this.walletModel.notify(wallet);
+    console.log(this.processModel.getProcessObject());
   }
 }
-
 
 export default RepaymentView;

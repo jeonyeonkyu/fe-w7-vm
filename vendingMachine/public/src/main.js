@@ -26,7 +26,7 @@ const processEl = {
 }
 
 const walletEl = {
-  $walletMoney: _.$('.wallet__money'),
+  $walletWrapper: _.$('.wallet__money'),
   priceClassName: 'wallet__money__price',
   $priceList: _.$All(`.wallet__money__price`),
   $countList: _.$All('.wallet__money__count'),
