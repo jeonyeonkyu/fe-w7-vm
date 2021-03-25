@@ -23,7 +23,6 @@ class WalletModel extends Observable {
   updateWallet(money) {
     let currentMoney = money;
     for (let moneyKind of this.wallet.keys()) {
-      if (currentMoney < 10) return;
       const count = Math.floor(currentMoney / moneyKind);
       this.wallet.set(moneyKind, count);
       currentMoney -= count * moneyKind;

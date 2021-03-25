@@ -43,10 +43,10 @@ class ProcessModel extends Observable {
         break;
       case '상품배출':
         print = `${content}(이) 배출됐음`;
+        break;
     }
     this.processObject.log.push(print);
   }
-
 }
 
 const processModel = new ProcessModel();
