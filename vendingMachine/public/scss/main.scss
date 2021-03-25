@@ -37,7 +37,7 @@
   }
   &__print_price {
     &::after {
-      content:"원";
+      content: "원";
     }
     height: 45px;
     border: 1px solid gray;
@@ -54,6 +54,7 @@
   }
   &__print_log {
     height: 180px;
+    overflow: auto;
   }
 }
 

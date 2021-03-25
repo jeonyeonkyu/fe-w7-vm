@@ -10,9 +10,15 @@ class PrintView {
   }
 
   render({ log }) {
-
+    this.$processLog.innerHTML = this.template({ log });
   }
 
+  template({ log }) {
+    const template = `<ul>
+      ${log.map(print => `<li>${print}</li>`).join('')}
+                      </ul>`;
+    return template;
+  }
 }
 
 
