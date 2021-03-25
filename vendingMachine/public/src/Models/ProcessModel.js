@@ -33,13 +33,16 @@ class ProcessModel extends Observable {
         print = `${content}원이 투입됐음.`;
         break;
       case '음료선택':
-        print = `${content}(이)가 선택됨`;
+        print = `${content}(이)가 선택됐음`;
         break;
       case '반환':
         print = `잔돈 ${content}원 반환`;
         break;
       case '구매불가':
         print = `${content} 구매 실패`;
+        break;
+      case '상품배출':
+        print = `${content}(이) 배출됐음`;
     }
     this.processObject.log.push(print);
   }
