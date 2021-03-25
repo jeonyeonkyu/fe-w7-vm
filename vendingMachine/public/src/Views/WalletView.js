@@ -14,7 +14,9 @@ class WalletView {
   }
 
   init() {
-    this.render();
+    this.walletModel.subscribe(this.render.bind(this));
+    const wallet = this.walletModel.getWallet();
+    this.render(wallet);
     this.initEvent();
   }
 
@@ -25,45 +27,41 @@ class WalletView {
   clickPriceHandler({ target }) {
     if (!target.classList.contains(this.priceClassName)) return;
     if (target.classList.contains('disable')) return;
-    const processObj = this.processModel.getProcessObject();
-
     const moneyKind = Number(target.innerText);
-    processObj.money += moneyKind;
+    this.processModel.updateMoney(moneyKind);
+    const processObj = this.processModel.getProcessObject();
     this.processModel.notify(processObj);
     this.walletModel.useMoney(moneyKind);
-    this.render();
+    const wallet = this.walletModel.getWallet();
+    this.render(wallet);
   }
 
-  moneyDisableChanger() {
-    const moneyObj = this.walletModel.getMoneyObject().map(el => el[1]);
+  moneyDisableChanger(wallet) {
+    const moneyObj = wallet.map(el => el[1]);
     const pairs = zip(this.$priceList, moneyObj.reverse());
     pairs
       .filter(([_, count]) => count <= 0)
-      .forEach(([$price, _]) => $price.classList.add('disable'));
+      .forEach(([$price]) => $price.classList.add('disable'));
     pairs
       .filter(([_, count]) => count > 0)
-      .forEach(([$price, _]) => $price.classList.remove('disable'));
+      .forEach(([$price]) => $price.classList.remove('disable'));
   }
 
-  renderCount() {
-
-    const moneyObj = this.walletModel.getMoneyObject().map(el => el[1]);
+  renderCount(wallet) {
+    const moneyObj = wallet.map(el => el[1]);
     const pairs = zip(this.$countList, moneyObj.reverse());
-
     pairs.forEach(([$count, count]) => $count.innerText = count);
   }
 
   renderTotalMoney() {
-    this.$totalMoney.innerText = this.walletModel.getMoney();
+    this.$totalMoney.innerText = this.walletModel.getTotalMoney();
   }
 
-  render() {
-    this.moneyDisableChanger();
-    this.renderCount();
+  render(wallet) {
+    this.moneyDisableChanger(wallet);
+    this.renderCount(wallet);
     this.renderTotalMoney();
   }
-
-
 }
 
 export default WalletView;
