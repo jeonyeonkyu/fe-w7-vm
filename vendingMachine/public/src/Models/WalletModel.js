@@ -1,5 +1,7 @@
-class WalletModel {
-  moneyObject = new Map([
+import Observable from '../Observable/Observable.js';
+
+class WalletModel extends Observable {
+  wallet = new Map([
     [10000, 0],
     [5000, 0],
     [1000, 0],
@@ -10,52 +12,45 @@ class WalletModel {
   ]);
 
   constructor(money) {
-    this.money = money;
+    super();
     this.init(money);
-    this.observers = [];
   }
 
-  
   init(money) {
-    this.makeObject(money);
+    this.updateWallet(money);
   }
 
-  makeObject(money) {
+  updateWallet(money) {
     let currentMoney = money;
-    for (let moneyKind of this.moneyObject.keys()) {
+    for (let moneyKind of this.wallet.keys()) {
       if (currentMoney < 10) return;
       const count = Math.floor(currentMoney / moneyKind);
-      this.moneyObject.set(moneyKind, count);
+      this.wallet.set(moneyKind, count);
       currentMoney -= count * moneyKind;
     }
   }
 
   useMoney(moneyKind) {
-    let count = this.moneyObject.get(moneyKind);
-    this.moneyObject.set(moneyKind, --count);
+    let count = this.wallet.get(moneyKind);
+    this.wallet.set(moneyKind, --count);
     this.money -= moneyKind;
   }
 
-  getMoneyObject() {
-    return Array.from(this.moneyObject.entries()); // moneyObject가 Map이라 가정
+  addMoney(money) {
+    const currentMoney = money + this.getTotalMoney();
+    this.updateWallet(currentMoney);
   }
 
-  getMoney() {
-    return this.money;
+  getWallet() {
+    return Array.from(this.wallet.entries()); // moneyObject가 Map이라 가정
   }
 
-  registerObserver(target) {
-    this.observers.push(target);
+  getTotalMoney() {
+    const totalMoney = this.getWallet().reduce((acc, [moneyKind, count]) => {
+      return acc + (moneyKind * count);
+    }, 0);
+    return totalMoney;
   }
-
-  unregisterObserver(target) {
-    this.observers = this.observers.filter(observer => observer !== target); 
-  }
-
-  notifyObservers(content) {
-    this.observers.forEach((observer) => observer.notify(content));
-  } 
-
 }
 
 export default WalletModel;
