@@ -12,13 +12,10 @@ class ProductView {
     this.init();
   }
 
-  notify(content) {
-    console.log(`모델의 ${content} 가 바뀌었어`); // ProductModel에서 데이터가 변경되면 알림받음
-  }
-  
+
   init() {
     this.initEvent();
-    this.productModel.registerObserver(this); // ProductView 가 ProductModel을 구독
+    this.processModel.subscribe(this.render.bind(this)); // ProductView의 render 가 ProcessModel을 구독
   }
 
   initEvent() {
@@ -27,11 +24,10 @@ class ProductView {
 
   clickProductHandler({ target }) {
     if (!target.classList.contains(this.nameListClassName)) return;
-    this.productModel.sold(target.innerText);
 
     // 상품이 판매중일때만 제품 배출
-    if(!this.isSoldOut(target)) this.disposeProduct(target);
-    else console.log("매진된 제품입니다.");
+    if (this.isSoldOut(target)) console.log("매진되었거나 돈이 부족합니다.");
+    else this.disposeProduct(target);
   }
 
   isSoldOut(product) {
@@ -41,23 +37,34 @@ class ProductView {
   disposeProduct(product) {
     setTimeout(() => {
       console.log(`${product.innerText} 뽑았습니다.`);
-      this.render();
-    },2000)
+      this.productModel.sold(product.innerText);
+      this.render(this.processModel.processObject.money);
+      // product 클릭하면 해당 processModel의 money 에서 product 가격만큼 뺀다
+      // notify  
+    }, 2000)
   }
 
 
-  itemDisableChanger() {
+  itemDisableChanger(money) {
     const pairs = zip(this.$nameList, this.productModel.getProduct());
+  
     pairs
-      .filter(([_, p]) => p.count <= 0)
+      .filter(([_, p]) => p.count <= 0 || p.price > money)
       .forEach(([$name]) => $name.classList.add('disable'));
+    
     pairs
-      .filter(([_, p]) => p.count > 0)
+      .filter(([_, p]) => p.count > 0 && p.price <= money)
       .forEach(([$name]) => $name.classList.remove('disable'));
   }
 
-  render() {
-    this.itemDisableChanger();
+  render({money}, templateFn) {
+    this.itemDisableChanger(money);
+
+    // templateFn();
+  }
+
+  drawTemplate() {
+    
   }
 }
 

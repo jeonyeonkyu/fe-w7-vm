@@ -12,7 +12,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     &__name {
-      outline: 3px solid red;
+      // outline: 3px solid red;
     }
     > li {
       margin: 10px;
