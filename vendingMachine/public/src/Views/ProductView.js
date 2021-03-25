@@ -22,7 +22,7 @@ class ProductView {
     _.on(this.$wrapper, 'click', this.clickProductHandler.bind(this));
   }
 
-  clickProductHandler({ target }) {
+  async clickProductHandler({ target }) {
     const processObj = this.processModel.getProcessObject();
 
     if (!target.classList.contains(this.nameListClassName)) return;
@@ -30,26 +30,30 @@ class ProductView {
       this.processModel.updateLog('구매불가', target.innerText);
       this.processModel.notify(processObj);
       console.log(processObj);
-    } else this.disposeProduct(target);
+    } else {
+      this.disposeProduct(target);
+      this.processModel.updateLog('음료선택', target.innerText);
+      this.processModel.notify(processObj);
+      console.log(processObj);
+    }
   }
 
   isSoldOut(product) {
     return product.classList.contains("disable");
   }
 
-  disposeProduct(product) {
-    setTimeout(() => {
-      const processObj = this.processModel.getProcessObject();
-
-      console.log(`${product.innerText} 뽑았습니다.`);
-      this.productModel.sold(product.innerText);
-      const price = Number(product.nextElementSibling.innerText);
-      this.minusMoney(price, processObj);
-      this.processModel.updateLog('음료선택', product.innerText);
-      console.log(processObj);
-      this.processModel.notify(processObj);
-    }, 2000)
+  async disposeProduct(product) {
+    await new Promise((resolve) => setTimeout(resolve,2000));
+    const processObj = this.processModel.getProcessObject();
+    this.productModel.sold(product.innerText);
+    const price = Number(product.nextElementSibling.innerText);
+    this.minusMoney(price, processObj);
+    this.processModel.updateLog('상품배출', product.innerText);
+    this.processModel.notify(processObj);
+    console.log(processObj);
   }
+
+ 
   
   minusMoney(price, processObj) {
     processObj.money -= price;
