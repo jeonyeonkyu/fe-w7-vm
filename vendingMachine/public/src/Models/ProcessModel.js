@@ -26,8 +26,23 @@ class ProcessModel extends Observable {
     this.processObject.money += money;
   }
 
+  updateLog(selector, content) {
+    let print = '';
+    switch (selector) {
+      case '투입':
+        print = `${content}원이 투입됐음.`;
+        break;
+      case '음료선택':
+        print = `${content}(이)가 선택됨`;
+        break;
+      case '반환':
+        print = `잔돈 ${content}원 반환`;
+        break;
+    }
+    this.processObject.log.push(print);
+  }
+
 }
 
 const processModel = new ProcessModel();
-
 export default processModel;

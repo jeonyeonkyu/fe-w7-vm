@@ -2,10 +2,10 @@ import _ from "../utils/elementUtil.js";
 import zip from "../utils/serviceUtil.js";
 
 class WalletView {
-  constructor({ walletModel, processModel }, { $walletMoney, priceClassName, $priceList, $countList, $totalMoney }) {
+  constructor({ walletModel, processModel }, { $walletWrapper, priceClassName, $priceList, $countList, $totalMoney }) {
     this.walletModel = walletModel;
     this.processModel = processModel;
-    this.$walletMoney = $walletMoney;
+    this.$walletWrapper = $walletWrapper;
     this.priceClassName = priceClassName;
     this.$priceList = $priceList;
     this.$countList = $countList;
@@ -21,7 +21,7 @@ class WalletView {
   }
 
   initEvent() {
-    _.on(this.$walletMoney, 'click', this.clickPriceHandler.bind(this));
+    _.on(this.$walletWrapper, 'click', this.clickPriceHandler.bind(this));
   }
 
   clickPriceHandler({ target }) {
@@ -29,16 +29,18 @@ class WalletView {
     if (target.classList.contains('disable')) return;
     const moneyKind = Number(target.innerText);
     this.processModel.updateMoney(moneyKind);
+    this.processModel.updateLog('투입', moneyKind);
     const processObj = this.processModel.getProcessObject();
     this.processModel.notify(processObj);
     this.walletModel.useMoney(moneyKind);
     const wallet = this.walletModel.getWallet();
     this.render(wallet);
+    console.log(processObj);
   }
 
   moneyDisableChanger(wallet) {
-    const moneyObj = wallet.map(el => el[1]);
-    const pairs = zip(this.$priceList, moneyObj.reverse());
+    const moneyCounts = wallet.map(el => el[1]);
+    const pairs = zip(this.$priceList, moneyCounts.reverse());
     pairs
       .filter(([_, count]) => count <= 0)
       .forEach(([$price]) => $price.classList.add('disable'));
@@ -48,8 +50,8 @@ class WalletView {
   }
 
   renderCount(wallet) {
-    const moneyObj = wallet.map(el => el[1]);
-    const pairs = zip(this.$countList, moneyObj.reverse());
+    const moneyCounts = wallet.map(el => el[1]);
+    const pairs = zip(this.$countList, moneyCounts.reverse());
     pairs.forEach(([$count, count]) => $count.innerText = count);
   }
 
