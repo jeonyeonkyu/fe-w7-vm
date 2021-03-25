@@ -23,19 +23,17 @@ class ProductView {
 
   clickProductHandler({ target }) {
     const processObj = this.processModel.getProcessObject();
-
     if (!target.classList.contains(this.nameListClassName)) return;
     if (this.isSoldOut(target)) {
       this.processModel.updateLog('구매불가', target.innerText);
-      this.processModel.notify(processObj);
     } else {
       const price = Number(target.nextElementSibling.innerText);
       this.disposeProduct(target);
       this.processModel.updateLog('음료선택', target.innerText);
       this.productModel.sold(target.innerText);
-      this.minusMoney(price, processObj);
-      this.processModel.notify(processObj);
+      this.processModel.updateMoney(-price);
     }
+    this.processModel.notify(processObj);
   }
 
   isSoldOut(product) {
@@ -47,10 +45,6 @@ class ProductView {
     const processObj = this.processModel.getProcessObject();
     this.processModel.updateLog('상품배출', product.innerText);
     this.processModel.notify(processObj);
-  }
-
-  minusMoney(price, processObj) {
-    processObj.money -= price;
   }
 
   itemDisableChanger(money) {
