@@ -5,10 +5,13 @@ class RepaymentView {
     this.walletModel = walletModel;
     this.processModel = processModel;
     this.$processExchange = $processExchange;
+    this.observeTimer = null;
+    this.boundNoInputObservingTimer = this.noInputObservingTimer.bind(this);
     this.init();
   }
 
   init() {
+    this.processModel.subscribe(this.boundNoInputObservingTimer);
     this.initEvent();
   }
 
@@ -24,7 +27,15 @@ class RepaymentView {
     this.walletModel.addMoney(inputMoney);
     const wallet = this.walletModel.getWallet();
     this.walletModel.notify(wallet);
-    console.log(this.processModel.getProcessObject());
+    this.processModel.subscribe(this.boundNoInputObservingTimer);
+  }
+
+  noInputObservingTimer() {
+    if (this.observeTimer) clearTimeout(this.observeTimer);
+    this.observeTimer = setTimeout(() => {
+      this.processModel.unsubscribe(this.boundNoInputObservingTimer);
+      this.exchangeClickHandler();
+    }, 2000);
   }
 }
 

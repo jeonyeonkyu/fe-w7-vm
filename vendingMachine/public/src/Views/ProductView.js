@@ -26,7 +26,7 @@ class ProductView {
     const processObj = this.processModel.getProcessObject();
 
     if (!target.classList.contains(this.nameListClassName)) return;
-    if (this.isSoldOut(target)){
+    if (this.isSoldOut(target)) {
       this.processModel.updateLog('구매불가', target.innerText);
       this.processModel.notify(processObj);
       console.log(processObj);
@@ -43,18 +43,17 @@ class ProductView {
   }
 
   async disposeProduct(product) {
-    await new Promise((resolve) => setTimeout(resolve,2000));
+    await new Promise((resolve) => setTimeout(resolve, 2000));
     const processObj = this.processModel.getProcessObject();
     this.productModel.sold(product.innerText);
     const price = Number(product.nextElementSibling.innerText);
     this.minusMoney(price, processObj);
     this.processModel.updateLog('상품배출', product.innerText);
     this.processModel.notify(processObj);
-    console.log(processObj);
   }
 
- 
-  
+
+
   minusMoney(price, processObj) {
     processObj.money -= price;
   }
@@ -62,20 +61,20 @@ class ProductView {
 
   itemDisableChanger(money) {
     const pairs = zip(this.$nameList, this.productModel.getProduct());
-  
+
     pairs
       .filter(([_, p]) => p.count <= 0 || p.price > money)
       .forEach(([$name]) => $name.classList.add('disable'));
-    
+
     pairs
       .filter(([_, p]) => p.count > 0 && p.price <= money)
       .forEach(([$name]) => $name.classList.remove('disable'));
   }
 
-  render({money}, templateFn) {
+  render({ money }, templateFn) {
     this.itemDisableChanger(money);
   }
-  
+
 }
 
 export default ProductView;

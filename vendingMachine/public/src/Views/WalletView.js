@@ -35,7 +35,6 @@ class WalletView {
     this.walletModel.useMoney(moneyKind);
     const wallet = this.walletModel.getWallet();
     this.render(wallet);
-    console.log(processObj);
   }
 
   moneyDisableChanger(wallet) {
