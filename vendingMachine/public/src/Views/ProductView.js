@@ -36,12 +36,19 @@ class ProductView {
 
   disposeProduct(product) {
     setTimeout(() => {
+
       console.log(`${product.innerText} 뽑았습니다.`);
       this.productModel.sold(product.innerText);
-      this.render(this.processModel.processObject.money);
-      // product 클릭하면 해당 processModel의 money 에서 product 가격만큼 뺀다
-      // notify  
+      const price = Number(product.nextElementSibling.innerText);
+      this.minusMoney(price);
+      
     }, 2000)
+  }
+
+  minusMoney(price) {
+    const processObj = this.processModel.getProcessObject();
+    processObj.money -= price;
+    this.processModel.notify(processObj);
   }
 
 
@@ -59,13 +66,8 @@ class ProductView {
 
   render({money}, templateFn) {
     this.itemDisableChanger(money);
-
-    // templateFn();
   }
-
-  drawTemplate() {
-    
-  }
+  
 }
 
 export default ProductView;
