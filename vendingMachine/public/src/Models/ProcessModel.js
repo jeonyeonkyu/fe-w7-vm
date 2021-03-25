@@ -38,6 +38,8 @@ class ProcessModel extends Observable {
       case '반환':
         print = `잔돈 ${content}원 반환`;
         break;
+      case '구매불가':
+        print = `${content} 구매 실패`;
     }
     this.processObject.log.push(print);
   }

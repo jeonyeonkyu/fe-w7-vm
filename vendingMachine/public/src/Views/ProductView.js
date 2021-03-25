@@ -23,11 +23,14 @@ class ProductView {
   }
 
   clickProductHandler({ target }) {
-    if (!target.classList.contains(this.nameListClassName)) return;
+    const processObj = this.processModel.getProcessObject();
 
-    // 상품이 판매중일때만 제품 배출
-    if (this.isSoldOut(target)) console.log("매진되었거나 돈이 부족합니다.");
-    else this.disposeProduct(target);
+    if (!target.classList.contains(this.nameListClassName)) return;
+    if (this.isSoldOut(target)){
+      this.processModel.updateLog('구매불가', target.innerText);
+      this.processModel.notify(processObj);
+      console.log(processObj);
+    } else this.disposeProduct(target);
   }
 
   isSoldOut(product) {
@@ -36,19 +39,20 @@ class ProductView {
 
   disposeProduct(product) {
     setTimeout(() => {
+      const processObj = this.processModel.getProcessObject();
 
       console.log(`${product.innerText} 뽑았습니다.`);
       this.productModel.sold(product.innerText);
       const price = Number(product.nextElementSibling.innerText);
-      this.minusMoney(price);
-      
+      this.minusMoney(price, processObj);
+      this.processModel.updateLog('음료선택', product.innerText);
+      console.log(processObj);
+      this.processModel.notify(processObj);
     }, 2000)
   }
-
-  minusMoney(price) {
-    const processObj = this.processModel.getProcessObject();
+  
+  minusMoney(price, processObj) {
     processObj.money -= price;
-    this.processModel.notify(processObj);
   }
 
 
