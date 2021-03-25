@@ -20,4 +20,3 @@ export default [
   { name: '감자칩', price: '2000', count: 1 },
   { name: '칸쵸', price: '1000', count: 1 },
 ]
-

@@ -12,7 +12,6 @@ class ProductView {
     this.init();
   }
 
-
   init() {
     this.initEvent();
     this.processModel.subscribe(this.render.bind(this));
@@ -50,15 +49,12 @@ class ProductView {
     this.processModel.notify(processObj);
   }
 
-
   minusMoney(price, processObj) {
     processObj.money -= price;
   }
 
-
   itemDisableChanger(money) {
     const pairs = zip(this.$nameList, this.productModel.getProduct());
-
     pairs
       .filter(([_, p]) => p.count <= 0 || p.price > money)
       .forEach(([$name]) => $name.classList.add('disable'));
@@ -68,10 +64,9 @@ class ProductView {
       .forEach(([$name]) => $name.classList.remove('disable'));
   }
 
-  render({ money }, templateFn) {
+  render({ money }) {
     this.itemDisableChanger(money);
   }
-
 }
 
 export default ProductView;

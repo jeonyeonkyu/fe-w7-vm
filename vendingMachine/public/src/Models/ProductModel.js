@@ -11,7 +11,6 @@ class ProductModel {
   getProduct() {
     return [...this.products];
   }
-
 }
 
 

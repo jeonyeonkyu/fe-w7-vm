@@ -35,7 +35,7 @@ class RepaymentView {
     this.observeTimer = setTimeout(() => {
       this.processModel.unsubscribe(this.boundNoInputObservingTimer);
       this.exchangeClickHandler();
-    }, 2000);
+    }, 5000);
   }
 }
 
