@@ -1,3 +1,6 @@
+import '../scss/main.scss';
+import '../scss/util.scss';
+
 import _ from './utils/elementUtil.js';
 import products from "./data/products.js";
 
